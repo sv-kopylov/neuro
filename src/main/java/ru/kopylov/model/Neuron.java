@@ -5,6 +5,7 @@ package ru.kopylov.model;
  */
 public interface Neuron {
     double getSignal();
+    void addInputSynapse(Synapse synapse);
     void treat();
 
 }

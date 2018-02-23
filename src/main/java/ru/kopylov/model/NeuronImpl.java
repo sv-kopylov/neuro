@@ -8,11 +8,14 @@ import java.util.ArrayList;
 public class NeuronImpl implements Neuron {
 
     private double signal;
-    private ArrayList<Synapse> input;
-    private ArrayList<Synapse> output;
+    private ArrayList<Synapse> inputSynapses;
+//    private ArrayList<Synapse> output;
     public double getSignal() {
         return signal;
     }
+
+
+
 
     @Override
     public void treat() {
@@ -20,17 +23,20 @@ public class NeuronImpl implements Neuron {
     }
 
     private double doSum() {
-        return   input
+        return   inputSynapses
                 .stream()
                 .mapToDouble(Synapse::getSignal)
                 .parallel()
                 .sum();
         }
-
     private double normalise(double sum){
         return sum;
     }
 
+    @Override
+    public void addInputSynapse(Synapse synapse) {
+        inputSynapses.add(synapse);
 
+    }
 
 }
