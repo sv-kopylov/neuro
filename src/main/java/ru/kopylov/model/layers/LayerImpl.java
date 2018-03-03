@@ -1,4 +1,11 @@
-package ru.kopylov.model;
+package ru.kopylov.model.layers;
+
+import ru.kopylov.model.computation.Normaliser;
+import ru.kopylov.model.elements.Neuron;
+import ru.kopylov.model.elements.NeuronImpl;
+import ru.kopylov.model.elements.Synapse;
+
+import java.util.stream.Stream;
 
 /**
  * Created by se on 11.02.2018.
@@ -8,12 +15,12 @@ public class LayerImpl implements Layer {
     private final int numberOfNeurons;
     Neuron[] neurons;
 
-    public LayerImpl(int orderNumber, int numberOfNeurons) {
+    public LayerImpl(int orderNumber, int numberOfNeurons, Normaliser normaliser) {
         this.orderNumber = orderNumber;
         this.numberOfNeurons = numberOfNeurons;
         neurons = new Neuron[numberOfNeurons];
         for (int i = 0; i < numberOfNeurons; i++) {
-            neurons[i] = new NeuronImpl();
+            neurons[i] = new NeuronImpl(normaliser);
         }
     }
 
@@ -27,6 +34,11 @@ public class LayerImpl implements Layer {
                 neurons[j].addInputSynapse(synapse);
             }
         }
+    }
+
+    @Override
+    public void think() {
+        Stream.of(neurons).forEach(Neuron::think);
     }
 
     @Override

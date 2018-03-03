@@ -1,4 +1,6 @@
-package ru.kopylov.model;
+package ru.kopylov.model.elements;
+
+import ru.kopylov.model.elements.Neuron;
 
 /**
  * Created by se on 10.02.2018.

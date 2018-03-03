@@ -1,4 +1,6 @@
-package ru.kopylov.model;
+package ru.kopylov.model.elements;
+
+import ru.kopylov.model.computation.Normaliser;
 
 import java.util.ArrayList;
 
@@ -9,17 +11,23 @@ public class NeuronImpl implements Neuron {
 
     private double signal;
     private ArrayList<Synapse> inputSynapses;
-//    private ArrayList<Synapse> output;
+
+    public NeuronImpl(Normaliser normaliser) {
+        this.normaliser = normaliser;
+    }
+
     public double getSignal() {
         return signal;
     }
-
-
-
+    private final Normaliser normaliser;
 
     @Override
-    public void treat() {
-        signal = normalise(doSum());
+    public void addInputSynapse(Synapse synapse) {
+        inputSynapses.add(synapse);
+    }
+    @Override
+    public void think() {
+        signal = normaliser.normalise(doSum());
     }
 
     private double doSum() {
@@ -29,14 +37,7 @@ public class NeuronImpl implements Neuron {
                 .parallel()
                 .sum();
         }
-    private double normalise(double sum){
-        return sum;
-    }
 
-    @Override
-    public void addInputSynapse(Synapse synapse) {
-        inputSynapses.add(synapse);
 
-    }
 
 }
